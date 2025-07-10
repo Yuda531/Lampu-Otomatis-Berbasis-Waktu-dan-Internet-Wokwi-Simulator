@@ -37,7 +37,7 @@ void loop() {
   Serial.printf("Jam sekarang: %02d:%02d:%02d\n", hourNow, timeinfo.tm_min, timeinfo.tm_sec);
 
 
-  if (hourNow >= 15 || hourNow < 6) {
+  if (hourNow >= 18 || hourNow < 6) {
     digitalWrite(ledPin, HIGH);
     lampuHidup = true;
   } else {
