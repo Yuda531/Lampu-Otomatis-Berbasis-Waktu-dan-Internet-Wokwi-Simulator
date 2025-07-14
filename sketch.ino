@@ -8,12 +8,15 @@ const char* password = "";
 const char* thingspeakApiKey = "76EL9MOEG7OM83SK"; 
 const char* server = "http://api.thingspeak.com/update";
 
-const int ledPin = 2;
+const int ledPins[] = {2, 4, 5, 18, 19};
+const int ledCount = sizeof(ledPins) / sizeof(ledPins[0]);
 bool lampuHidup = false;
 
 void setup() {
   Serial.begin(115200);
-  pinMode(ledPin, OUTPUT);
+  for (int i = 0; i < ledCount; i++) {
+    pinMode(ledPins[i], OUTPUT);
+  }
 
   WiFi.begin(ssid, password);
   Serial.print("Menghubungkan ke WiFi");
@@ -37,11 +40,15 @@ void loop() {
   Serial.printf("Jam sekarang: %02d:%02d:%02d\n", hourNow, timeinfo.tm_min, timeinfo.tm_sec);
 
 
-  if (hourNow >= 18 || hourNow < 6) {
-    digitalWrite(ledPin, HIGH);
+  if (hourNow >= 9 || hourNow < 6) {
+    for (int i = 0; i < ledCount; i++) {
+      digitalWrite(ledPins[i], HIGH);
+    }
     lampuHidup = true;
   } else {
-    digitalWrite(ledPin, LOW);
+    for (int i = 0; i < ledCount; i++) {
+      digitalWrite(ledPins[i], LOW);
+    }
     lampuHidup = false;
   }
 
